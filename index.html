@@ -3,61 +3,581 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your Name or Business</title>
+  <title>photorestorationgraphics</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
+      background: #fff8f2;
       color: #333;
     }
     header {
-      background: #009688;
-      color: white;
+      background: #1A8A3B;
+      color: #fff;
+      padding: 1em;
       text-align: center;
-      padding: 2rem 1rem;
+      position: relative;
     }
-    section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
+    nav {
+      background: #DFF2DC;
+      display: flex;
+      justify-content: center;
+      padding: 0.5em 0;
+    }
+    nav a {
+      margin: 0 1em;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    html { scroll-behavior: smooth; }
+    section { padding: 2em; }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    form button {
+      background: #1A8A3B;
+      color: white;
+      padding: 0.7em 1.5em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    /* Shop */
+    #shop {
+      background: #DFF2DC;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 2em auto 1em;
+      padding: 1.5em;
+      box-shadow: 0 0 10px rgba(26, 138, 59, 0.4);
+    }
+    #product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1em;
+      margin-bottom: 1.5em;
+    }
+    .product-item {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 280px;
+      padding: 1em;
+      text-align: center;
+    }
+    .product-item img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.5em;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .product-item img:hover {
+      transform: scale(1.05);
+    }
+    .product-item button {
+      background-color: #1A8A3B;
+      border: none;
+      color: white;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 0.5em;
+    }
+    #cart-section h2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.5em;
+      color: #1A8A3B;
+      cursor: pointer;
+    }
+    #cart img.thumb {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 0.5em;
+    }
+    #cart li {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0.5em 0;
+      border-bottom: 1px solid #a2d18f;
+    }
+    /* Services */
+    #services {
+      background: #f4f9f4;
+    }
+    .services ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5em;
+      margin-bottom: 2em;
+    }
+    .services ul li a {
+      text-decoration: none;
+      color: #1A8A3B;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .services ul li a:hover {
+      color: #145214;
+    }
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5em;
+    }
+    .service-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .service-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .service-card-content {
+      padding: 1em;
+      flex: 1;
+    }
+    .service-card-content h3 {
+      margin-top: 0;
+      color: #1A8A3B;
+    }
+    .service-card-content p {
+      font-size: 0.95em;
+      line-height: 1.4;
+      color: #555;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+      gap: 1.5em;
+    }
+    @media (max-width: 200px) {
+      nav {
+        flex-direction: column;
+        display: none;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      nav.active {
+        display: flex;
+      }
+      nav a {
+        margin: 1em 0;
+        font-size: 1.2em;
+      }
+      #shop {
+        max-width: 90%;
+        margin: 2em auto;
+      }
+      .product-item {
+        width: 100%;
+      }
+      .services ul { flex-direction: column; align-items: center; }
     }
     footer {
+      background: #1A8A3B;
+      color: #fff;
       text-align: center;
-      padding: 1rem;
-      background: #ddd;
-      font-size: 0.9rem;
-    }
-    @media (max-width: 600px) {
-      header, section, footer {
-        padding: 1rem;
-      }
+      padding: 1em;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Welcome to My Website</h1>
-    <p>Your tagline goes here</p>
+    <h1>photorestorationgraphics<img src="C:\Users\owner\Desktop\Photorestorationgraphics\photo2." width="400px" align="center" alt="" /></h1>
+    <p>Memories that last a life time!</p>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
   </header>
 
-  <section>
-    <h2>About Me</h2>
-    <p>This is a short paragraph about you or your business. You can describe your services, experience, or anything relevant here.</p>
+  <nav id="navMenu">
+    <a href="#shop">Shop</a>
+    <a href="#booking">Booking</a>
+    <a href="#contact">Contact</a>
+    <a href="#services">Services</a>
+  </nav>
 
-    <h2>Contact</h2>
-    <p>Email: your@email.com</p>
-    <p>Social: @yourhandle</p>
+  <!-- Shop Section -->
+  <section id="shop">
+    <h2>Shop Our Products</h2>
+    <div id="product-list"></div>
+
+    <div id="cart-section">
+      <h2 onclick="toggleCart()">🛒 Cart <span id="cart-toggle-indicator">▼</span></h2>
+      <div id="cart" style="display: block;">
+        <p>Your cart is empty.</p>
+      </div>
+      <button id="clearCartBtn" style="display:none; margin-top: 1em; background:#cc3333; color:white; border:none; padding:0.5em 1em; border-radius:5px;">Clear Cart</button>
+    </div>
+
+    <form id="orderForm">
+      <input type="text" name="customerName" placeholder="Your Full Name" required />
+      <input type="email" name="customerEmail" placeholder="Your Email Address" required />
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking">
+    <h2>Booking Request</h2>
+    <form id="bookingForm">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <input type="tel" name="phone" placeholder="Phone Number" />
+      <input type="date" name="date" min="" required />
+      <select name="eventType" required>
+        <option value="">Select Event Type</option>
+        <option value="wedding">Wedding</option>
+        <option value="birthday">Birthday</option>
+        <option value="baptism">Baptism/Confirmation</option>
+        <option value="birth">Birth/Newborn</option>
+        <option value="special">Special Event</option>
+      </select>
+      <textarea name="details" rows="4" placeholder="Describe your request"></textarea>
+      <input type="file" name="attachment" />
+      <button type="submit">Submit Request</button>
+    </form>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+      <p><strong>Phone:</strong> (832) 374-8680</p>
+      <p><strong>Address:</strong> 9402 Camargo Ct, Houston, Texas 77074</p>
+      <p><strong>Email:</strong> <a href="mailto:ana213377@yahoo.com">ana213377@yahoo.com</a></p>
+    </div>
+    <form id="contactForm" action="#" method="POST">
+      <input type="text" name="contactName" placeholder="Your Name" required />
+      <input type="email" name="contactEmail" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="thank-you.html" />
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="services">
+    <h2>Our Services</h2>
+    <ul>
+      <li><a href="#wedding-photography">Wedding Photography</a></li>
+      <li><a href="#birth-photography">Birth Photography</a></li>
+      <li><a href="#baptisms-confirmations">Baptisms &amp; Confirmations</a></li>
+      <li><a href="#birthday-celebrations">Birthday Celebrations</a></li>
+      <li><a href="#special-events">Special Events</a></li>
+      <li><a href="#custom-cakes">Custom Cakes</a></li>
+      <li><a href="#flower-arrangements">Flower Arrangements</a></li>
+      <li><a href="#balloon-decorations">Balloon Decorations</a></li>
+    </ul>
+
+    <div class="service-cards">
+      <div class="service-card" id="wedding-photography">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\w1.jpg" alt="Wedding Photography" />
+        <div class="service-card-content">
+          <h3>Wedding Photography</h3>
+          <p>From first look to final dance, we capture every tear, laugh, and loving glance in timeless detail.</p>
+        </div>
+      </div>
+      <div class="service-card" id="birth-photography">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\b0.jpg" alt="Birth Photography" />
+        <div class="service-card-content">
+          <h3>Birth Photography</h3>
+          <p>Celebrate your little one’s entrance with gentle, authentic images that become family heirlooms.</p>
+        </div>
+      </div>
+      <div class="service-card" id="baptisms-confirmations">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\b3.jpg" alt="Baptisms & Confirmations" />
+        <div class="service-card-content">
+          <h3>Baptisms &amp; Confirmations</h3>
+          <p>Document these sacred milestones with reverence, capturing both ceremony and joy-filled celebration.</p>
+        </div>
+      </div>
+      <div class="service-card" id="birthday-celebrations">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\s.jpg" alt="Birthday Celebrations" />
+        <div class="service-card-content">
+          <h3>Birthday Celebrations</h3>
+          <p>From first birthdays to sweet sixteens, we freeze the fun, the cake, and the confetti in perfect frames.</p>
+        </div>
+      </div>
+      <div class="service-card" id="special-events">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\se.jpg" alt="Special Events" />
+        <div class="service-card-content">
+          <h3>Special Events</h3>
+          <p>Corporate parties, anniversaries, and more—professional coverage that highlights every memorable moment.</p>
+        </div>
+      </div>
+      <div class="service-card" id="custom-cakes">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\c3.jpg" alt="Custom Cakes" />
+        <div class="service-card-content">
+          <h3>Custom Cakes</h3>
+          <p>Artisanal, made-to-order cakes that taste as good as they look—designed to match your theme perfectly.</p>
+        </div>
+      </div>
+      <div class="service-card" id="flower-arrangements">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\f.jpg" alt="Flower Arrangements" />
+        <div class="service-card-content">
+          <h3>Flower Arrangements</h3>
+          <p>Lush, bespoke floral designs to elevate any event—from intimate bouquets to grand centerpieces.</p>
+        </div>
+      </div>
+      <div class="service-card" id="balloon-decorations">
+        <img src="C:\Users\owner\Desktop\Photorestorationgraphics\images\bd.jpg" alt="Balloon Decorations" />
+        <div class="service-card-content">
+          <h3>Balloon Decorations</h3>
+          <p>Vibrant installations and arches that bring whimsy and color, tailor-made for your celebration.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>
-    &copy; 2025 Your Name. All rights reserved.
+    <p>&copy; 2025 photorestorationgraphics. All rights reserved.</p>
   </footer>
 
+  <a class="whatsapp-button" href="https://wa.me/18323748680" target="_blank" rel="noopener">Chat on WhatsApp</a>
+
+  <script>
+    // Date picker min today
+    const dateInput = document.querySelector('input[type="date"][name="date"]');
+    if (dateInput) {
+      dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+    }
+
+    // Menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Products and Cart logic
+    const products = [
+      { id: 1, name: "Wedding Photography Package", price: 1200, image: "images/w1.jpg" },
+      { id: 2, name: "Custom Cake", price: 150, image: "images/c3.jpg" },
+      { id: 3, name: "Flower Arrangement", price: 75, image: "images/f.jpg" },
+      { id: 4, name: "Balloon Decoration", price: 50, image: "images/bd.jpg" },
+      { id: 5, name: "Souvenirs", price: 12, image: "images/souv.jpg" }
+    ];
+    const productList = document.getElementById("product-list");
+    const cartDiv = document.getElementById("cart");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderProducts() {
+      productList.innerHTML = "";
+      products.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product-item";
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}" />
+          <strong>${p.name}</strong><br/>
+          $${p.price.toFixed(2)}
+          <button data-id="${p.id}">Add to Cart</button>
+        `;
+        productList.appendChild(div);
+      });
+    }
+
+    function renderCart() {
+      const clearBtn = document.getElementById("clearCartBtn");
+      if (!cart.length) {
+        cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+        clearBtn.style.display = "none";
+        return;
+      }
+      let html = "<ul>";
+      let total = 0;
+      cart.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        const line = prod.price * item.quantity;
+        total += line;
+        html += `
+          <li>
+            <img class="thumb" src="${prod.image}" alt="${prod.name}"/>
+            <span>${prod.name}</span> — $${prod.price.toFixed(2)} x
+            <input type="number" min="1" value="${item.quantity}" data-id="${item.id}"/>
+            = $${line.toFixed(2)}
+            <button class="remove-item" data-id="${item.id}" style="margin-left:10px;">Remove</button>
+          </li>`;
+      });
+      html += `</ul><strong>Total: $${total.toFixed(2)}</strong>`;
+      cartDiv.innerHTML = html;
+      clearBtn.style.display = "inline-block";
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function toggleCart() {
+      const cartElem = document.getElementById("cart");
+      const indicator = document.getElementById("cart-toggle-indicator");
+      if (cartElem.style.display === "none") {
+        cartElem.style.display = "block";
+        indicator.textContent = "▼";
+      } else {
+        cartElem.style.display = "none";
+        indicator.textContent = "▲";
+      }
+    }
+
+    productList.addEventListener("click", e => {
+      if (e.target.tagName === "BUTTON") {
+        const id = parseInt(e.target.getAttribute("data-id"));
+        const found = cart.find(item => item.id === id);
+        if (found) {
+          found.quantity++;
+        } else {
+          cart.push({ id: id, quantity: 1 });
+        }
+        saveCart();
+        renderCart();
+      }
+    });
+
+    cartDiv.addEventListener("input", e => {
+      if (e.target.tagName === "INPUT" && e.target.type === "number") {
+        const id = parseInt(e.target.getAttribute("data-id"));
+        const qty = parseInt(e.target.value);
+        if (qty < 1) {
+          e.target.value = 1;
+          return;
+        }
+        const item = cart.find(i => i.id === id);
+        if (item) {
+          item.quantity = qty;
+          saveCart();
+          renderCart();
+        }
+      }
+    });
+
+    cartDiv.addEventListener("click", e => {
+      if (e.target.classList.contains("remove-item")) {
+        const id = parseInt(e.target.getAttribute("data-id"));
+        cart = cart.filter(item => item.id !== id);
+        saveCart();
+        renderCart();
+      }
+    });
+
+    document.getElementById("clearCartBtn").addEventListener("click", () => {
+      cart = [];
+      saveCart();
+      renderCart();
+    });
+
+    renderProducts();
+    renderCart();
+
+    // Order form submit
+    document.getElementById("orderForm").addEventListener("submit", e => {
+      e.preventDefault();
+      if (!cart.length) {
+        alert("Your cart is empty!");
+        return;
+      }
+      const name = e.target.customerName.value.trim();
+      const email = e.target.customerEmail.value.trim();
+
+      let message = `Dear photographer,%0D%0A%0D%0A`;
+      message += `I would like to place an order for the following items:%0D%0A%0D%0A`;
+
+      let total = 0;
+      cart.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        const lineTotal = prod.price * item.quantity;
+        total += lineTotal;
+        message += `- ${prod.name}: ${item.quantity} x $${prod.price.toFixed(2)} = $${lineTotal.toFixed(2)}%0D%0A`;
+      });
+      message += `%0D%0ATotal: $${total.toFixed(2)}%0D%0A%0D%0A`;
+      message += `Customer Name: ${name}%0D%0A`;
+      message += `Customer Email: ${email}%0D%0A%0D%0AThank you.%0D%0A`;
+
+      const mailtoLink = `mailto:ana213377@yahoo.com?subject=Order from ${encodeURIComponent(name)}&body=${message}`;
+      window.location.href = mailtoLink;
+    });
+
+    // Booking form submit
+    document.getElementById("bookingForm").addEventListener("submit", e => {
+      e.preventDefault();
+
+      const form = e.target;
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim() || "N/A";
+      const date = form.date.value;
+      const eventType = form.eventType.value;
+      const details = form.details.value.trim() || "No additional details.";
+      // File input is ignored here since mailto can't send attachments
+
+      let message = `Dear photographer,%0D%0A%0D%0A`;
+      message += `I would like to request a booking with the following details:%0D%0A%0D%0A`;
+      message += `Name: ${name}%0D%0A`;
+      message += `Email: ${email}%0D%0A`;
+      message += `Phone: ${phone}%0D%0A`;
+      message += `Event Date: ${date}%0D%0A`;
+      message += `Event Type: ${eventType}%0D%0A`;
+      message += `Additional Details: ${details}%0D%0A%0D%0AThank you.%0D%0A`;
+
+      const mailtoLink = `mailto:ana213377@yahoo.com?subject=Booking Request from ${encodeURIComponent(name)}&body=${message}`;
+      window.location.href = mailtoLink;
+    });
+
+    // Contact form submit
+    document.getElementById("contactForm").addEventListener("submit", e => {
+      e.preventDefault();
+
+      const form = e.target;
+      const name = form.contactName.value.trim();
+      const email = form.contactEmail.value.trim();
+      const messageContent = form.message.value.trim();
+
+      let message = `Dear photographer,%0D%0A%0D%0A`;
+      message += `You have received a new message from your website contact form.%0D%0A%0D%0A`;
+      message += `Name: ${name}%0D%0A`;
+      message += `Email: ${email}%0D%0A`;
+      message += `Message: %0D%0A${messageContent}%0D%0A%0D%0AThank you.%0D%0A`;
+
+      const mailtoLink = `mailto:ana213377@yahoo.com?subject=Website Contact from ${encodeURIComponent(name)}&body=${message}`;
+      window.location.href = mailtoLink;
+    });
+  </script>
 </body>
 </html>
